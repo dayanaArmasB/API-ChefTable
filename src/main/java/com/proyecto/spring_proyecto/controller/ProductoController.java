@@ -14,61 +14,62 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.proyecto.spring_proyecto.model.entidad.Producto;
-import com.proyecto.spring_proyecto.model.dao.IProductoDAO;
+
+import com.proyecto.spring_proyecto.application.interfaces.IProductoService;
+import com.proyecto.spring_proyecto.core.entity.Producto;
 
 @RestController
 @RequestMapping("/api/productos")
 public class ProductoController {
-    
-@Autowired
-private IProductoDAO productoDAO;
 
-@CrossOrigin(origins = "http://localhost:4200")
-@GetMapping
-public List<Producto> getAllProductos(){
-    return productoDAO.findAll();
-}
+    @Autowired
+    private IProductoService productoService;
 
- // Método GET para obtener un producto por ID
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping
+    public List<Producto> getAllProductos() {
+        return productoService.cargarProductos();
+    }
+
+    // Método GET para obtener un producto por ID
     @GetMapping("/{id}")
     public ResponseEntity<Producto> getProductoById(@PathVariable Long id) {
-        Optional<Producto> producto = productoDAO.findById(id);
+        Optional<Producto> producto = productoService.getProductoById(id);
         return producto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // Método POST para crear un nuevo producto
     @PostMapping
-    public Producto createProducto(@RequestBody Producto producto) {
-        return productoDAO.save(producto);
+    public String createProducto(@RequestBody Producto producto) {
+        return productoService.guardarProducto(producto);
     }
 
-    // Método PUT para actualizar un producto existente
-    @PutMapping("/{id}")
-    public ResponseEntity<Producto> updateProducto(@PathVariable Long id, @RequestBody Producto productoDetails) {
-        Optional<Producto> productoOptional = productoDAO.findById(id);
+    // Método PUT para actualizar un producto existente TODO
+    // @PutMapping("/{id}")
+    // public ResponseEntity<Producto> updateProducto(@PathVariable Long id,
+    // @RequestBody Producto productoDetails) {
+    // Optional<Producto> productoOptional = productoService.findById(id);
 
-        if (!productoOptional.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
+    // if (!productoOptional.isPresent()) {
+    // return ResponseEntity.notFound().build();
+    // }
 
-        Producto producto = productoOptional.get();
-        producto.setNombre(productoDetails.getNombre());
-        producto.setPrecio(productoDetails.getPrecio());
+    // Producto producto = productoOptional.get();
+    // producto.setNombre(productoDetails.getNombre());
+    // producto.setPrecio(productoDetails.getPrecio());
 
-        Producto updatedProducto = productoDAO.save(producto);
-        return ResponseEntity.ok(updatedProducto);
-    }
+    // Producto updatedProducto = productoService.save(producto);
+    // return ResponseEntity.ok(updatedProducto);
+    // }
 
     // Método DELETE para eliminar un producto
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProducto(@PathVariable Long id) {
-        if (!productoDAO.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-
-        productoDAO.deleteById(id);
+        // if (!productoService.existsById(id)) {
+        // return ResponseEntity.notFound().build();
+        // }
+        productoService.eliminarProducto(id);
         return ResponseEntity.noContent().build();
     }
-    
+
 }

@@ -1,4 +1,4 @@
-package com.proyecto.spring_proyecto.model.entidad;
+package com.proyecto.spring_proyecto.core.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
