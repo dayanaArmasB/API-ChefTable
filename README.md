@@ -1,4 +1,4 @@
-para este proyecto se deja las querys para la creacion de la base de datos y las tablas respectivas
+Para este proyecto se deja las querys para la creacion de la base de datos y las tablas respectivas
 
 CREATE DATABASE spring;
 USE spring;
