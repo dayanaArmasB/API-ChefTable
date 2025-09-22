@@ -1,4 +1,4 @@
-package com.proyecto.spring_proyecto.application.dto;
+package com.proyecto.spring_proyecto.auth.dto;
 
 public class LoginRequest {
     

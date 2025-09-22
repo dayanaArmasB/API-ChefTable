@@ -3,12 +3,13 @@ package com.proyecto.spring_proyecto.application.services;
 import java.util.List;
 import java.util.Optional;
 
-
+import org.springframework.stereotype.Service;
 
 import com.proyecto.spring_proyecto.application.interfaces.IProductoService;
 import com.proyecto.spring_proyecto.core.entity.Producto;
-import com.proyecto.spring_proyecto.dao.IProductoDAO;
+import com.proyecto.spring_proyecto.repository.IProductoDAO;
 
+@Service
 public class ProductoServiceImp implements IProductoService {
 
 

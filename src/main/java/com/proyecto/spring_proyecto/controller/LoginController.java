@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proyecto.spring_proyecto.application.dto.LoginRequest;
-import com.proyecto.spring_proyecto.application.dto.LoginResponse;
+import com.proyecto.spring_proyecto.auth.dto.LoginRequest;
+import com.proyecto.spring_proyecto.auth.dto.LoginResponse;
 
 @RestController
 @RequestMapping("/api/auth")

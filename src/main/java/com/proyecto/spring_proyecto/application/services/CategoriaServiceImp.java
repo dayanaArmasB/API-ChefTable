@@ -3,11 +3,13 @@ package com.proyecto.spring_proyecto.application.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.proyecto.spring_proyecto.application.interfaces.ICategoriaService;
 import com.proyecto.spring_proyecto.core.entity.Categoria;
-import com.proyecto.spring_proyecto.dao.ICategoriaDAO;
+import com.proyecto.spring_proyecto.repository.ICategoriaDAO;
 
+@Service
 public class CategoriaServiceImp implements ICategoriaService {
     // @Autowired
     // private  ICategoriaDAO categoriaDAO;

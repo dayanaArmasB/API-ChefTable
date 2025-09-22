@@ -43,6 +43,15 @@ public class ProductoController {
     public String createProducto(@RequestBody Producto producto) {
         return productoService.guardarProducto(producto);
     }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProducto(@PathVariable Long id) {
+        // if (!productoService.existsById(id)) {
+        // return ResponseEntity.notFound().build();
+        // }
+        productoService.eliminarProducto(id);
+        return ResponseEntity.noContent().build();
+    }
 
     // Método PUT para actualizar un producto existente TODO
     // @PutMapping("/{id}")
@@ -63,13 +72,6 @@ public class ProductoController {
     // }
 
     // Método DELETE para eliminar un producto
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProducto(@PathVariable Long id) {
-        // if (!productoService.existsById(id)) {
-        // return ResponseEntity.notFound().build();
-        // }
-        productoService.eliminarProducto(id);
-        return ResponseEntity.noContent().build();
-    }
+
 
 }
