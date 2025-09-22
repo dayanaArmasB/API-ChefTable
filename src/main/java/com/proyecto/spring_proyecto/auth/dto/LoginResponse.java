@@ -3,20 +3,25 @@ package com.proyecto.spring_proyecto.auth.dto;
 
 public class LoginResponse {
     
+    private String address;
     private String token;
-    private long expiresInSeconds;
 
-    public LoginResponse(String token, long expiresInSeconds) {
+    public LoginResponse(String address, String token) {
+        this.address = address;
         this.token = token;
-        this.expiresInSeconds = expiresInSeconds;
     }
-
+    
+    public String getAddress() {
+        return address;
+    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
     public String getToken() {
         return token;
     }
-    public long getExpiresInSeconds() {
-        return expiresInSeconds;
+    public void setToken(String token) {
+        this.token = token;
     }
-    
     
 }

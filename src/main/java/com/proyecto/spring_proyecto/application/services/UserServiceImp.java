@@ -9,7 +9,7 @@ import com.proyecto.spring_proyecto.application.interfaces.IUserService;
 import com.proyecto.spring_proyecto.auth.dto.LoginResponse;
 import com.proyecto.spring_proyecto.core.entity.User;
 import com.proyecto.spring_proyecto.repository.IUserDAO;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 
@@ -18,6 +18,13 @@ public class UserServiceImp implements IUserService {
     private final IUserDAO userDAO;
     private final IJwtService jwtService;
     private final PasswordEncoder passwordEncoder;
+
+
+    public UserServiceImp(IUserDAO userDAO, IJwtService jwtService, PasswordEncoder passwordEncoder) {
+        this.userDAO = userDAO;
+        this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public Optional<String> authenticate(String address, String rawPassword) {
@@ -29,9 +36,9 @@ public class UserServiceImp implements IUserService {
     @Override
     public LoginResponse renewToken(String token) {
         var claims = jwtService.parseClaims(token);
-        var username = claims.getSubject();
+        var address = claims.getSubject();
         return userDAO.findByAddress(address)
-                .map(u -> new LoginResponse(username, jwtService.generateToken(address)))
+                .map(u -> new LoginResponse(address, jwtService.generateToken(address)))
                 .orElse(null);
     }
 
