@@ -1,21 +1,22 @@
 package com.proyecto.spring_proyecto.auth.dto;
 
+
 public class LoginResponse {
     
-    private String message;
-    private boolean success;
+    private String token;
+    private long expiresInSeconds;
 
-    public LoginResponse(String message, boolean success) {
-        this.message = message;
-        this.success = success;
+    public LoginResponse(String token, long expiresInSeconds) {
+        this.token = token;
+        this.expiresInSeconds = expiresInSeconds;
     }
 
-    public String getMessage() {
-        return message;
+    public String getToken() {
+        return token;
     }
-
-    public boolean isSuccess() {
-        return success;
+    public long getExpiresInSeconds() {
+        return expiresInSeconds;
     }
+    
     
 }
