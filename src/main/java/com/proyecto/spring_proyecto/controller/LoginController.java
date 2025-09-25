@@ -23,7 +23,7 @@ public class LoginController {
     private IUserService userService;
     private IJwtService jwt;
 
-    @PostMapping("/login")
+     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest req) {
         return userService.authenticate(req.address(), req.password())
                 .map(token -> ResponseEntity.ok(new LoginResponse(token, jwt.getExpirationSeconds())))
