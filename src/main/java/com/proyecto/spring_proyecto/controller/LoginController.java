@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.spring_proyecto.application.interfaces.IJwtService;
 import com.proyecto.spring_proyecto.application.interfaces.IUserService;
+import com.proyecto.spring_proyecto.auth.dto.LoginLegacyResponse;
 import com.proyecto.spring_proyecto.auth.dto.LoginRequest;
 import com.proyecto.spring_proyecto.auth.dto.LoginResponse;
 
@@ -23,10 +24,11 @@ public class LoginController {
     private IUserService userService;
     private IJwtService jwt;
 
-     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest req) {
-        return userService.authenticate(req.address(), req.password())
-                .map(token -> ResponseEntity.ok(new LoginResponse(token, jwt.getExpirationSeconds())))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        return userService.authenticate(request.address(), request.password())
+                .map(token -> ResponseEntity.ok(new LoginResponse(request.address(), token)))
+                .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
+
 }
