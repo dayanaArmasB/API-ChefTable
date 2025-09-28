@@ -11,9 +11,6 @@ import com.proyecto.spring_proyecto.repository.ICategoriaDAO;
 
 @Service
 public class CategoriaServiceImp implements ICategoriaService {
-    // @Autowired
-    // private  ICategoriaDAO categoriaDAO;
-
     private final ICategoriaDAO categoriaDAO;
 
     // Inyección por constructor

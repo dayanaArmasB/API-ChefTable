@@ -11,14 +11,11 @@ import com.proyecto.spring_proyecto.core.entity.User;
 import com.proyecto.spring_proyecto.repository.IUserDAO;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
-
 @Service
 public class UserServiceImp implements IUserService {
     private final IUserDAO userDAO;
     private final IJwtService jwtService;
     private final PasswordEncoder passwordEncoder;
-
 
     public UserServiceImp(IUserDAO userDAO, IJwtService jwtService, PasswordEncoder passwordEncoder) {
         this.userDAO = userDAO;
@@ -28,6 +25,8 @@ public class UserServiceImp implements IUserService {
 
     @Override
     public Optional<String> authenticate(String address, String rawPassword) {
+        // System.out.println("RAW PASSWORD RECIBIDO: " + rawPassword);
+
         return userDAO.findByAddress(address)
                 .filter(u -> passwordEncoder.matches(rawPassword, u.getPassword()))
                 .map(u -> jwtService.generateToken(u.getAddress()));
@@ -41,7 +40,6 @@ public class UserServiceImp implements IUserService {
                 .map(u -> new LoginResponse(address, jwtService.generateToken(address)))
                 .orElse(null);
     }
-
 
     @Override
     public User save(User user) {

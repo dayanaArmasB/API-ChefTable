@@ -15,14 +15,17 @@ import com.proyecto.spring_proyecto.auth.dto.LoginLegacyResponse;
 import com.proyecto.spring_proyecto.auth.dto.LoginRequest;
 import com.proyecto.spring_proyecto.auth.dto.LoginResponse;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "*") // Permitir acceso desde el frontend
 
 public class LoginController {
-    
-    private IUserService userService;
-    private IJwtService jwt;
+
+    private final IUserService userService;
+    private final IJwtService jwt;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {

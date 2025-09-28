@@ -18,14 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.proyecto.spring_proyecto.application.interfaces.IProductoService;
 import com.proyecto.spring_proyecto.core.entity.Producto;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/productos")
+@CrossOrigin(origins = "*") // Permitir acceso desde el frontend
 public class ProductoController {
 
-    @Autowired
-    private IProductoService productoService;
-
-    @CrossOrigin(origins = "http://localhost:4200")
+    private final IProductoService productoService;
+ 
     @GetMapping
     public List<Producto> getAllProductos() {
         return productoService.cargarProductos();

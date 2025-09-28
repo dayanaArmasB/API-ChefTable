@@ -22,11 +22,8 @@ import jakarta.annotation.PostConstruct;
 public class JwtServiceImp implements IJwtService {
   /** Debe estar en Base64 (64+ bytes si usas HS512; con HS256 basta 32+ bytes) */
     private String secret;
-    /** TTL en segundos (p.ej. 864000 = 10 días) */
-    private long ttlSeconds = 864_000;
-
     private Key key;
-    @Value("${jwt.expirationSeconds:1800}") private long expirationSeconds;
+    @Value("${ttl-seconds:1800}") private long expirationSeconds;
 
     @PostConstruct
     void init() {
@@ -40,7 +37,7 @@ public class JwtServiceImp implements IJwtService {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(Date.from(now))
-                .setExpiration(Date.from(now.plusSeconds(ttlSeconds)))
+                .setExpiration(Date.from(now.plusSeconds(expirationSeconds)))
                 .signWith(key, SignatureAlgorithm.HS256) // Usa HS512 si tu clave es >=64 bytes reales
                 .compact();
     }
@@ -64,7 +61,7 @@ public class JwtServiceImp implements IJwtService {
     }
 
     public void setTtlSeconds(long ttlSeconds) {
-        this.ttlSeconds = ttlSeconds;
+        this.expirationSeconds = ttlSeconds;
     }
 
     @Override
