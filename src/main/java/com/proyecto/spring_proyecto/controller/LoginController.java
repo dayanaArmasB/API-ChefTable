@@ -12,6 +12,8 @@ import com.proyecto.spring_proyecto.application.interfaces.IJwtService;
 import com.proyecto.spring_proyecto.application.interfaces.IUserService;
 import com.proyecto.spring_proyecto.auth.dto.LoginRequest;
 import com.proyecto.spring_proyecto.auth.dto.LoginResponse;
+import com.proyecto.spring_proyecto.auth.dto.RegisterUserRequest;
+import com.proyecto.spring_proyecto.auth.dto.RegisterUserResponse;
 import com.proyecto.spring_proyecto.core.entity.User;
 
 import lombok.RequiredArgsConstructor;
@@ -31,10 +33,11 @@ public class LoginController {
                 .map(token -> ResponseEntity.ok(new LoginResponse(request.address(), token)))
                 .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
-    
+
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
-        return ResponseEntity.ok(userService.save(user));
+    public ResponseEntity<RegisterUserResponse> register(@RequestBody RegisterUserRequest request) {
+        RegisterUserResponse userReponse = userService.save(request);
+        return ResponseEntity.ok(userReponse);
     }
 
 }

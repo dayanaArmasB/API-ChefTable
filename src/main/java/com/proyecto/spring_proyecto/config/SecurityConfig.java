@@ -42,7 +42,7 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-      @Bean
+    @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
 
         JwtAuthorizationFilter jwtAuthorizationFilter = new JwtAuthorizationFilter(authManager, jwtService);

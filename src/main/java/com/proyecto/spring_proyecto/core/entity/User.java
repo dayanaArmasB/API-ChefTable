@@ -1,13 +1,24 @@
 package com.proyecto.spring_proyecto.core.entity;
 
+import java.time.LocalDateTime;
+
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "usuarios")
 public class User {
 
@@ -22,30 +33,20 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    public Long getId() {
-        return id;
-    }
+    @CreatedDate
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
-    public String getAddress() {
-        return address;
-    }
+    @CreatedBy
+    @Column(name = "created_by", updatable = false)
+    private String createdBy;
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    
+    @LastModifiedBy
+    @Column(name = "updated_by")
+    private String updatedBy;
 
 }
