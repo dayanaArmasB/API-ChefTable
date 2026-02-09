@@ -40,4 +40,17 @@ public class ProductoServiceImp implements IProductoService {
         productoDAO.deleteById(id);
         return "Se eliminó el producto";
     }
+
+    @Override
+    public Optional<Producto> actualizarProducto(Long id, Producto producto) {
+    return productoDAO.findById(id).map(p -> {
+        p.setNombre(producto.getNombre());
+        p.setCantidad(producto.getCantidad());
+        p.setPrecio(producto.getPrecio());
+        p.setCategoria(producto.getCategoria());
+
+        return productoDAO.save(p);
+    });
+}
+
 }

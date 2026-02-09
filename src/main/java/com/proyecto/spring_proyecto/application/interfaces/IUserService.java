@@ -8,7 +8,7 @@ import com.proyecto.spring_proyecto.auth.dto.RegisterUserResponse;
 import com.proyecto.spring_proyecto.core.entity.User;
 
 public interface IUserService {
-    Optional<String> authenticate(String address, String rawPassword);
+    LoginResponse authenticate(String address, String rawPassword);
     LoginResponse renewToken(String token);
     RegisterUserResponse save(RegisterUserRequest user);
     

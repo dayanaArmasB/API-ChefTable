@@ -9,6 +9,6 @@ public interface IProductoService {
     public String guardarProducto(Producto producto);
     public List<Producto> cargarProductos();
     public String eliminarProducto(Long id);
-
+    Optional<Producto> actualizarProducto(Long id, Producto producto);
     public Optional<Producto> getProductoById(Long id);
 }

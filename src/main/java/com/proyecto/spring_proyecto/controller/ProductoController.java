@@ -54,26 +54,17 @@ public class ProductoController {
         productoService.eliminarProducto(id);
         return ResponseEntity.noContent().build();
     }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Producto> updateProducto(
+            @PathVariable Long id,
+            @RequestBody Producto producto
+    ) {
+        return productoService.actualizarProducto(id, producto)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
-    // Método PUT para actualizar un producto existente TODO
-    // @PutMapping("/{id}")
-    // public ResponseEntity<Producto> updateProducto(@PathVariable Long id,
-    // @RequestBody Producto productoDetails) {
-    // Optional<Producto> productoOptional = productoService.findById(id);
-
-    // if (!productoOptional.isPresent()) {
-    // return ResponseEntity.notFound().build();
-    // }
-
-    // Producto producto = productoOptional.get();
-    // producto.setNombre(productoDetails.getNombre());
-    // producto.setPrecio(productoDetails.getPrecio());
-
-    // Producto updatedProducto = productoService.save(producto);
-    // return ResponseEntity.ok(updatedProducto);
-    // }
-
-    // Método DELETE para eliminar un producto
 
 
 }

@@ -8,10 +8,14 @@ public class LoginResponse {
 
     private String address;
     private String token;
+    private boolean success;
+    private String message;
 
-    public LoginResponse(String address, String token) {
+    public LoginResponse(String address, String token, boolean success, String message) {
         this.address = address;
         this.token = token;
+        this.success = success;
+        this.message = message;
     }
 
 }

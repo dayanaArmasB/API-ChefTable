@@ -26,22 +26,75 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public Optional<String> authenticate(String address, String rawPassword) {
-        // System.out.println("RAW PASSWORD RECIBIDO: " + rawPassword);
+    public LoginResponse authenticate(String address, String rawPassword) {
 
+        // 1️⃣ Buscar usuario
         return userDAO.findByAddress(address)
-                .filter(u -> passwordEncoder.matches(rawPassword, u.getPassword()))
-                .map(u -> jwtService.generateToken(u.getAddress()));
+                .map(user -> {
+
+                    // 2️⃣ Validar password
+                    if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+                        return new LoginResponse(
+                                null,
+                                null,
+                                false,
+                                "Credenciales incorrectas"
+                        );
+                    }
+
+                    // 3️⃣ Login exitoso
+                    String token = jwtService.generateToken(user.getAddress());
+
+                    return new LoginResponse(
+                            user.getAddress(),
+                            token,
+                            true,
+                            "Login exitoso"
+                    );
+                })
+                .orElseGet(() -> new LoginResponse(
+                        null,
+                        null,
+                        false,
+                        "Usuario no encontrado"
+                ));
     }
+
 
     @Override
     public LoginResponse renewToken(String token) {
-        var claims = jwtService.parseClaims(token);
-        var address = claims.getSubject();
-        return userDAO.findByAddress(address)
-                .map(u -> new LoginResponse(address, jwtService.generateToken(address)))
-                .orElse(null);
+
+        try {
+            // 1️⃣ Validar y parsear token
+            var claims = jwtService.parseClaims(token);
+            var address = claims.getSubject();
+
+            // 2️⃣ Verificar que el usuario exista
+            return userDAO.findByAddress(address)
+                    .map(user -> new LoginResponse(
+                            address,
+                            jwtService.generateToken(address),
+                            true,
+                            "Token renovado correctamente"
+                    ))
+                    .orElseGet(() -> new LoginResponse(
+                            null,
+                            null,
+                            false,
+                            "Usuario no encontrado"
+                    ));
+
+        } catch (Exception e) {
+            // 3️⃣ Token inválido / expirado / manipulado
+            return new LoginResponse(
+                    null,
+                    null,
+                    false,
+                    "Token inválido o expirado"
+            );
+        }
     }
+
 
     @Override
     public RegisterUserResponse save(RegisterUserRequest request) {

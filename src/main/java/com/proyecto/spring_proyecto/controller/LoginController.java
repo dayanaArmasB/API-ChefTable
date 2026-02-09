@@ -29,10 +29,21 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
-        return userService.authenticate(request.address(), request.password())
-                .map(token -> ResponseEntity.ok(new LoginResponse(request.address(), token)))
-                .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+
+        LoginResponse response = userService.authenticate(
+                request.address(),
+                request.password()
+        );
+
+        if (!response.isSuccess()) {
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body(response);
+        }
+
+        return ResponseEntity.ok(response);
     }
+
 
     @PostMapping("/register")
     public ResponseEntity<RegisterUserResponse> register(@RequestBody RegisterUserRequest request) {
